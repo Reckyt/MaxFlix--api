@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const idUrl = req.params.id;
   connection.query(
-    "SELECT * from director WHERE id_director = ?",
+    "SELECT * from director AS d LEFT OUTER JOIN movie AS m ON d.id_director = m.id_director WHERE d.id_director = ? ORDER BY m.year",
     idUrl,
     (err, results) => {
       if (err) {
