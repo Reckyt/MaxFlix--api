@@ -5,7 +5,7 @@ const connection = require("../config");
 
 router.get("/", (req, res) => {
   connection.query(
-    "SELECT * FROM movie AS m INNER JOIN director AS d WHERE m.id_director = d.id_director",
+    "SELECT *, CONCAT(d.firstname, ' ', d.name) AS director FROM movie AS m INNER JOIN director AS d WHERE m.id_director = d.id_director",
     (err, results) => {
       if (err) {
         res.status(500).send("Error retrieving movies");
