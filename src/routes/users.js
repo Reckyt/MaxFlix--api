@@ -3,8 +3,8 @@ const express = require("express");
 const router = express.Router();
 const connection = require("../config");
 
-// const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 router.get("/", (req, res) => {
   connection.query("SELECT * FROM user", (err, results) => {
@@ -36,7 +36,7 @@ router.post("/signup", (req, res) => {
     firstname: req.body.firstname,
   };
   console.log(formData, req.body);
-  connection.query("INSERT INTO client SET ?", formData, (err, results) => {
+  connection.query("INSERT INTO user SET ?", formData, (err, results) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -47,7 +47,7 @@ router.post("/signup", (req, res) => {
 
 router.post("/login", (req, res) => {
   connection.query(
-    "SELECT * FROM client WHERE mail = ?",
+    "SELECT * FROM user WHERE mail = ?",
     req.body.mail,
     (err, results) => {
       if (err) {
