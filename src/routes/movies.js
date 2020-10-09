@@ -5,7 +5,7 @@ const connection = require("../config");
 
 router.get("/", (req, res) => {
   connection.query(
-    "SELECT *, CONCAT(d.firstname, ' ', d.name) AS director FROM movie AS m INNER JOIN director AS d WHERE m.id_director = d.id_director",
+    "SELECT *, CONCAT(d.firstname, ' ', d.name) AS director FROM movie AS m INNER JOIN director AS d WHERE m.director_id_director = d.id_director",
     (err, results) => {
       if (err) {
         res.status(500).send("Error retrieving movies");
@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const idUrl = req.params.id;
   connection.query(
-    "SELECT * from movie AS m INNER JOIN director AS d ON m.id_director = d.id_director WHERE m.id_movie = ?",
+    "SELECT ANY_VALUE(m.id_movie) as id_movie, ANY_VALUE(m.title) AS title, ANY_VALUE(m.year) AS year, ANY_VALUE(m.poster) AS poster, ANY_VALUE(m.link) AS link, ANY_VALUE(m.synopsis) AS synopsis, ANY_VALUE(m.actors) AS actors, ANY_VALUE(d.firstname) AS firstname,ANY_VALUE(d.name) AS name, ANY_VALUE(m.director_id_director) AS id_director, group_concat(mk.kind order by mk.kind asc separator ' - ') AS kind from movie AS m INNER JOIN director AS d ON m.director_id_director = d.id_director INNER JOIN movie_has_kind AS mhk ON m.id_movie = mhk.movie_id_movie INNER JOIN movie_kind AS mk ON mhk.movie_kind_id_user = mk.id_user WHERE m.id_movie = ? group by title;",
     [idUrl],
     (err, results) => {
       if (err) {
@@ -31,18 +31,19 @@ router.get("/:id", (req, res) => {
   );
 });
 
-router.post("/", (req, res) => {
+router.put("/", (req, res) => {
+  console.log(req.body);
   const formData = req.body;
   connection.query("INSERT INTO movie SET ?", formData, (err, results) => {
     if (err) {
-      res.status(500).send("Error saving");
+      res.status(500).send("Error saving movie");
     } else {
-      res.sendStatus(200);
+      res.sendStatus(201);
     }
   });
 });
 
-router.put("/:id", (req, res) => {
+router.post("/:id", (req, res) => {
   const idUrl = req.params.id;
   const formData = req.body;
 
