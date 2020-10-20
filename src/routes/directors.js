@@ -28,7 +28,7 @@ router.get("/:id", (req, res) => {
   );
 });
 
-router.put("", (req, res) => {
+router.put("/", (req, res) => {
   const formData = req.body;
   connection.query("INSERT INTO director SET ?", formData, (err, results) => {
     if (err) {
