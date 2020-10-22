@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const idUrl = req.params.id;
   connection.query(
-    "SELECT * from seen_movie AS sm INNER JOIN movie AS m ON m.id_movie = wm.movie_id_movie WHERE sm.user_id = ? ",
+    "SELECT * from seen_movie AS sm INNER JOIN movie AS m ON m.id_movie = sm.movie_id_movie WHERE sm.user_id = ? ",
     idUrl,
     (err, results) => {
       if (err) {
