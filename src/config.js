@@ -4,10 +4,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST_SERVER,
-  user: process.env.DB_USER_SERVER,
-  password: process.env.DB_PASSWORD_SERVER,
-  database: process.env.DB_DATABASE_SERVER,
+  host: process.env.HEROKU_HOST,
+  user: process.env.HEROKU_USER,
+  password: process.env.HEROKU_PASSWORD,
+  database: process.env.HEROKU_DATABASE,
   insecureAuth: true,
 });
 module.exports = connection;

@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
 const api = require("./src/routes");
 
@@ -18,10 +18,10 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.listen(port, (err) => {
+app.listen(PORT, (err) => {
   if (err) {
     throw new Error("There is an error");
   }
-  console.log("There is a port, bitches");
+  console.log(`Server is running on port ${PORT}. Bitches`);
 });
 //
