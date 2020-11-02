@@ -1,10 +1,13 @@
 {
   "name": "maxflix_api",
   "version": "1.0.0",
-  "description": "Node template",
+  "description": "Streaming app",
   "main": "index.js",
+  "engines": {
+    "node": "12.10.0"
+  },
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -22,8 +25,5 @@
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "pool": "^0.4.1"
-  },
-  "engines": {
-    "node": "12.10.0"
   }
 }
