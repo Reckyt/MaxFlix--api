@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const idUrl = req.params.id;
   connection.query(
-    "SELECT m.*, d.*, group_concat(mk.kind order by mk.kind asc separator ' - ') AS kind from movie AS m INNER JOIN director AS d ON m.director_id_director = d.id_director INNER JOIN movie_has_kind AS mhk ON m.id_movie = mhk.movie_id_movie INNER JOIN movie_kind AS mk ON mhk.movie_kind_id_user = mk.id_user WHERE m.id_movie = 1 group by title",
+    "SELECT m.*, d.*, group_concat(mk.kind order by mk.kind asc separator ' - ') AS kind from movie AS m INNER JOIN director AS d ON m.director_id_director = d.id_director INNER JOIN movie_has_kind AS mhk ON m.id_movie = mhk.movie_id_movie INNER JOIN movie_kind AS mk ON mhk.movie_kind_id_user = mk.id_user WHERE m.id_movie = ? group by title",
     [idUrl],
     (err, results) => {
       if (err) {
